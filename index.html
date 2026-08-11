@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1017">
+<meta name="description" content="Monitor sísmico: catálogo USGS y flujo en vivo del EMSC. Datos oficiales, sin predicción.">
+<title>Sismo CO — Monitor sísmico</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <div>
+      <h1>Sismo CO</h1>
+      <p class="brand-sub">Catálogo USGS · flujo en vivo EMSC</p>
+    </div>
+  </div>
+  <div class="status-cluster">
+    <span id="wsBadge" class="badge badge-off" title="Estado del WebSocket del EMSC">EMSC: conectando…</span>
+    <button id="refreshBtn" class="btn" type="button">Actualizar</button>
+  </div>
+</header>
+
+<p class="disclaimer" role="note">
+  <strong>Esto no es un sistema de alerta temprana.</strong> Todo lo que ves aquí se publica
+  <em>después</em> de que el sismo ocurrió. Los sismos no se pueden predecir. Para emergencias en
+  Colombia: línea <strong>123</strong> y los canales de la
+  <a href="https://portal.gestiondelriesgo.gov.co/" target="_blank" rel="noopener">UNGRD</a>.
+</p>
+
+<main>
+
+  <section class="panel" aria-labelledby="live-h">
+    <div class="panel-head">
+      <h2 id="live-h">En vivo · EMSC</h2>
+      <span class="tag tag-warn">preliminar</span>
+    </div>
+    <p class="panel-note">
+      Eventos que llegan por WebSocket desde el <a href="https://www.seismicportal.eu/" target="_blank" rel="noopener">EMSC</a>
+      conforme se detectan. Las magnitudes son automáticas y se revisan en las horas siguientes,
+      por eso este listado se muestra separado del catálogo USGS: mezclarlos falsearía el conteo de réplicas.
+    </p>
+    <ul id="liveList" class="evlist">
+      <li class="empty">Esperando el primer evento del flujo en vivo…</li>
+    </ul>
+  </section>
+
+  <section class="panel" aria-labelledby="cat-h">
+    <div class="panel-head">
+      <h2 id="cat-h">Catálogo · USGS</h2>
+      <span id="catMeta" class="tag">—</span>
+    </div>
+
+    <div class="controls">
+      <label>Zona
+        <select id="regionSel">
+          <option value="co">Colombia y alrededores</option>
+          <option value="world">Todo el planeta</option>
+        </select>
+      </label>
+      <label>Magnitud mínima
+        <select id="magSel">
+          <option value="1">1.0</option>
+          <option value="2.5" selected>2.5</option>
+          <option value="4.5">4.5</option>
+          <option value="6">6.0</option>
+        </select>
+      </label>
+      <label>Periodo
+        <select id="daysSel">
+          <option value="1">Últimas 24 h</option>
+          <option value="7" selected>7 días</option>
+          <option value="30">30 días</option>
+        </select>
+      </label>
+    </div>
+
+    <ul id="catList" class="evlist">
+      <li class="empty">Cargando catálogo…</li>
+    </ul>
+  </section>
+
+  <section class="panel" aria-labelledby="src-h">
+    <h2 id="src-h">Fuentes oficiales</h2>
+    <ul class="links">
+      <li><a href="https://sismo.sgc.gov.co/" target="_blank" rel="noopener">SGC — Servicio Geológico Colombiano</a> · sismos de Colombia y volcanes</li>
+      <li><a href="https://earthquake.usgs.gov/earthquakes/map/" target="_blank" rel="noopener">USGS</a> · catálogo sísmico mundial</li>
+      <li><a href="https://www.emsc-csem.org/" target="_blank" rel="noopener">EMSC-CSEM</a> · detección rápida (app LastQuake)</li>
+      <li><a href="https://geofon.gfz.de/" target="_blank" rel="noopener">GEOFON — GFZ Potsdam</a></li>
+      <li><a href="https://volcano.si.edu/" target="_blank" rel="noopener">Smithsonian Global Volcanism Program</a> · reporte semanal de volcanes</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <p>Datos de <a href="https://earthquake.usgs.gov/" target="_blank" rel="noopener">USGS</a> y
+     <a href="https://www.seismicportal.eu/" target="_blank" rel="noopener">EMSC</a>.
+     Esta app no recolecta ni envía datos tuyos.</p>
+</footer>
+
+<script src="src/app.js"></script>
+</body>
+</html>

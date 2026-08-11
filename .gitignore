@@ -1,0 +1,31 @@
+# dependencias
+node_modules/
+
+# proyecto nativo generado por Capacitor (se regenera con: npx cap add android)
+android/
+ios/
+
+# firmas y secretos — NUNCA en el repositorio
+*.jks
+*.keystore
+*.p12
+*.pem
+key.properties
+.env
+.env.*
+
+# build / temporales
+dist/
+build/
+.gradle/
+local.properties
+*.apk
+*.aab
+*.log
+
+# sistema operativo / editores
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
