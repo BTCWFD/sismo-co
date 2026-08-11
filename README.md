@@ -68,14 +68,30 @@ Las fuentes se quedan en la raíz para que GitHub Pages sirva el repo tal cual.
 Único permiso: `android.permission.INTERNET`. La app no usa ubicación, contactos ni
 almacenamiento; no agregues permisos que no necesite.
 
-APK de depuración:
+### JDK: Capacitor 8 necesita **21**, no 17
+
+Compilar con JDK 17 falla en `:capacitor-android:compileDebugJavaWithJavac` con
+`error: invalid source release: 21`. No hace falta instalar nada: Android Studio trae un
+JBR 21 embebido, y Studio lo usa por defecto. Para compilar por consola hay que apuntarlo:
 
 ```bash
-cd android && ./gradlew app:assembleDebug
+JAVA_HOME="C:\Program Files\Android\Android Studio\jbr" ./gradlew app:assembleDebug
 ```
 
-Queda en `android/app/build/outputs/apk/debug/app-debug.apk`.
+APK de depuración: `android/app/build/outputs/apk/debug/app-debug.apk`.
 Desde Android Studio: `npx cap open android` → *Build → Build Bundle(s) / APK(s) → Build APK(s)*.
+
+### Permisos del manifiesto fusionado
+
+```
+android.permission.INTERNET
+co.sismo.monitor.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+```
+
+El segundo lo inyecta AndroidX Core: es un permiso de firma que la propia app se define a
+sí misma para registrar broadcast receivers no exportados en API 33+. No pide nada al
+usuario ni da acceso a ningún dato del dispositivo, y no se puede quitar sin romper
+AndroidX. Ningún permiso de ubicación, contactos ni almacenamiento.
 
 ## Privacidad
 
