@@ -48,11 +48,34 @@ Luego <http://localhost:5173>.
 GitHub Pages sobre la rama `main`, carpeta raíz. El HTTPS que da Pages es lo que permite
 instalar la PWA en Android desde Chrome (menú → *Instalar aplicación*).
 
-## Android
+## Android (Capacitor)
 
-El proyecto nativo se genera con Capacitor y **no se versiona** (`android/` está en
-`.gitignore`); se recrea con `npx cap add android`. Único permiso necesario:
-`android.permission.INTERNET`. La app no usa ubicación, contactos ni almacenamiento.
+`appId`: `co.sismo.monitor`. El proyecto nativo **no se versiona** (`android/` está en
+`.gitignore`); se recrea desde cero:
+
+```bash
+npm install
+npx cap add android
+npm run sync
+```
+
+`npm run sync` genera `www/` y luego corre `npx cap sync android`. Capacitor **no acepta**
+`webDir: "."` — lo rechaza explícitamente — y aunque lo aceptara empaquetaría
+`node_modules/`, `android/` y `.git/` dentro del APK. Por eso `scripts/build-www.mjs` copia
+solo los assets del sitio a `www/`, que es un artefacto de build y tampoco se versiona.
+Las fuentes se quedan en la raíz para que GitHub Pages sirva el repo tal cual.
+
+Único permiso: `android.permission.INTERNET`. La app no usa ubicación, contactos ni
+almacenamiento; no agregues permisos que no necesite.
+
+APK de depuración:
+
+```bash
+cd android && ./gradlew app:assembleDebug
+```
+
+Queda en `android/app/build/outputs/apk/debug/app-debug.apk`.
+Desde Android Studio: `npx cap open android` → *Build → Build Bundle(s) / APK(s) → Build APK(s)*.
 
 ## Privacidad
 

@@ -1,0 +1,30 @@
+{
+  "name": "sismo-co",
+  "version": "1.0.0",
+  "description": "PWA de monitoreo sísmico: catálogo USGS y flujo en vivo del EMSC.",
+  "main": "sw.js",
+  "scripts": {
+    "build:www": "node scripts/build-www.mjs",
+    "sync": "npm run build:www && npx cap sync android",
+    "serve": "npx serve . -l 5173"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BTCWFD/sismo-co.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BTCWFD/sismo-co/issues"
+  },
+  "homepage": "https://github.com/BTCWFD/sismo-co#readme",
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/core": "^8.5.0"
+  }
+}
